@@ -1,7 +1,7 @@
 # library-api
 Library management system api
 
-# How to run projcet locally
+# How to run project locally
 
 1.Clone the project to your destination
 
