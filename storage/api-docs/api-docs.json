@@ -1,0 +1,1187 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Library management system api documentation",
+        "description": "This is a library magement api that you can perform variaus task as edit, update delete users,books.Also you can perform actions like comment, like,unlike, add to favorites,remove to favorites on books.",
+        "contact": {
+            "email": "chrissoemma@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://library-api.kaweza.com/api/v1",
+            "description": "Library API Server"
+        }
+    ],
+    "paths": {
+        "/auth/register": {
+            "post": {
+                "tags": [
+                    "Authentications"
+                ],
+                "summary": "Register new user",
+                "description": "Returns new user data",
+                "operationId": "registerUser",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreUserRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/auth/login": {
+            "post": {
+                "tags": [
+                    "Authentications"
+                ],
+                "summary": "Login new user",
+                "description": "Returns new user data",
+                "operationId": "loginUser",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginUserRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/books": {
+            "get": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Get list of books",
+                "description": "Returns list of all books",
+                "operationId": "getBooksList",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/get_books_request_parameter_limit"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BookResource"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Store new Book",
+                "description": "Returns book data",
+                "operationId": "storeBook",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreBookRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Book"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/books/{id}": {
+            "get": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Get book information",
+                "description": "Returns book data",
+                "operationId": "getBookById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Book id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Book"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Update existing book",
+                "description": "Returns updated book data",
+                "operationId": "updateBook",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Book id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateBookRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Book"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Delete existing book",
+                "description": "Deletes a record and returns no content",
+                "operationId": "deleteBook",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "book id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/books/favorite/{id}": {
+            "post": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Add book to favorite",
+                "description": "Returns  added favorite book data",
+                "operationId": "addBookToFavorite",
+                "responses": {
+                    "201": {
+                        "description": "Successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Favorite"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Delete existing book from favorites",
+                "description": "Deletes a record and returns no content",
+                "operationId": "deleteBookFromFavorite",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "book id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/books/likes/{id}": {
+            "post": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Add like to book",
+                "description": "Returns  added like to book data",
+                "operationId": "addLikeToBook",
+                "responses": {
+                    "201": {
+                        "description": "Successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Like"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "remove existing like from book",
+                "description": "Deletes a record and returns no content",
+                "operationId": "RemovoveLikeFromBook",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "book id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/books/comments/{id}": {
+            "post": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Add comment to a specific book",
+                "description": "Returns  added comment to book",
+                "operationId": "addCommenToBook",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "book id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreCommentRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Book"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/books/comments/{id}/view": {
+            "get": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Get comments of a specific book",
+                "description": "Returns comments data of specic book",
+                "operationId": "getCommentsById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Book id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Book"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/popular": {
+            "get": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Get popular books list",
+                "description": "Returns  popular list of all books",
+                "operationId": "getPopularBooksList",
+                "responses": {
+                    "200": {
+                        "description": "Successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Book"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/users": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get list of Users",
+                "description": "Returns list of all users",
+                "operationId": "getUserList",
+                "responses": {
+                    "200": {
+                        "description": "Successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/users/{id}": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get single user information",
+                "description": "Returns user data",
+                "operationId": "getUserById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "User id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Update existing User",
+                "description": "Returns updated user data",
+                "operationId": "updateUser",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "user id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true
+                },
+                "responses": {
+                    "202": {
+                        "description": "Successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Delete existing user",
+                "description": "Deletes a record and returns no content",
+                "operationId": "deleteUser",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "user id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Book": {
+                "title": "Book",
+                "description": "Book model",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "title": {
+                        "title": "Title",
+                        "description": "Title of the new book",
+                        "type": "string",
+                        "example": "A nice title"
+                    },
+                    "author": {
+                        "title": "Author",
+                        "description": "Author of the new book",
+                        "type": "string",
+                        "example": "Jane Doe"
+                    },
+                    "created_at": {
+                        "title": "Created at",
+                        "description": "Created at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    },
+                    "updated_at": {
+                        "title": "Updated at",
+                        "description": "Updated at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Book"
+                }
+            },
+            "Comment": {
+                "title": "Comment",
+                "description": "Comment model",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "body": {
+                        "title": "Body",
+                        "description": "Body of comment",
+                        "type": "string",
+                        "example": "This is new comment body "
+                    },
+                    "user_id": {
+                        "title": "User ID",
+                        "description": "User's id",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 5
+                    },
+                    "book_id": {
+                        "title": "Book ID",
+                        "description": "Book's id",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "created_at": {
+                        "title": "Created at",
+                        "description": "Created at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    },
+                    "updated_at": {
+                        "title": "Updated at",
+                        "description": "Updated at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Comment"
+                }
+            },
+            "Favorite": {
+                "title": "Favorite",
+                "description": "Favorite model",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "user_id": {
+                        "title": "User ID",
+                        "description": "User's id",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 5
+                    },
+                    "book_id": {
+                        "title": "Book ID",
+                        "description": "Book's id",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "created_at": {
+                        "title": "Created at",
+                        "description": "Created at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    },
+                    "updated_at": {
+                        "title": "Updated at",
+                        "description": "Updated at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Favorite"
+                }
+            },
+            "Like": {
+                "title": "Like",
+                "description": "Like model",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "user_id": {
+                        "title": "User ID",
+                        "description": "User's id",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 5
+                    },
+                    "book_id": {
+                        "title": "Book ID",
+                        "description": "Book's id",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "created_at": {
+                        "title": "Created at",
+                        "description": "Created at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    },
+                    "updated_at": {
+                        "title": "Updated at",
+                        "description": "Updated at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Like"
+                }
+            },
+            "User": {
+                "title": "User",
+                "description": "User model",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "name": {
+                        "title": "Name",
+                        "description": "Name of the new user",
+                        "type": "string",
+                        "example": "This is new user's name"
+                    },
+                    "email": {
+                        "title": "Email",
+                        "description": "Email of the new user",
+                        "type": "string",
+                        "example": "This is new user's email"
+                    },
+                    "password": {
+                        "title": "Password",
+                        "description": "Password of the new user",
+                        "type": "string",
+                        "example": "This is new user's password"
+                    },
+                    "created_at": {
+                        "title": "Created at",
+                        "description": "Created at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    },
+                    "updated_at": {
+                        "title": "Updated at",
+                        "description": "Updated at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "User"
+                }
+            },
+            "pagination": {
+                "properties": {
+                    "page": {
+                        "type": "integer",
+                        "minimum": 1
+                    }
+                },
+                "type": "object"
+            },
+            "BookResource": {
+                "title": "BookResource",
+                "description": "Book resource",
+                "properties": {
+                    "data": {
+                        "title": "Data",
+                        "description": "Data wrapper",
+                        "type": "array",
+                        "items": {
+                            "ref": null
+                        }
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "BookResource"
+                }
+            },
+            "LoginUserRequest": {
+                "title": "Store User request",
+                "description": "Store User request body data",
+                "required": [
+                    "name"
+                ],
+                "properties": {
+                    "email": {
+                        "title": "email",
+                        "description": "email of the new User",
+                        "type": "string",
+                        "example": "This is new User's email"
+                    },
+                    "password": {
+                        "title": "password",
+                        "description": "password of the new User",
+                        "type": "string",
+                        "example": "This is new User's password"
+                    }
+                },
+                "type": "object"
+            },
+            "StoreBookRequest": {
+                "title": "Store Book request",
+                "description": "Store Book request body data",
+                "required": [
+                    "name"
+                ],
+                "properties": {
+                    "title": {
+                        "title": "title",
+                        "description": "Title of the new Book",
+                        "type": "string",
+                        "example": "A nice Book"
+                    },
+                    "author": {
+                        "title": "author",
+                        "description": "Author of the new Book",
+                        "type": "string",
+                        "example": "This is new Book's author"
+                    }
+                },
+                "type": "object"
+            },
+            "StoreCommentRequest": {
+                "title": "Store User request",
+                "description": "Store User request body data",
+                "required": [
+                    "name"
+                ],
+                "properties": {
+                    "body": {
+                        "title": "body",
+                        "description": "comment body",
+                        "type": "string",
+                        "example": "The comment body"
+                    }
+                },
+                "type": "object"
+            },
+            "StoreUserRequest": {
+                "title": "Store User request",
+                "description": "Store User request body data",
+                "required": [
+                    "name"
+                ],
+                "properties": {
+                    "name": {
+                        "title": "name",
+                        "description": "name of the new User",
+                        "type": "string",
+                        "example": "John doe"
+                    },
+                    "email": {
+                        "title": "email",
+                        "description": "email of the new User",
+                        "type": "string",
+                        "example": "This is new User's email"
+                    },
+                    "password": {
+                        "title": "password",
+                        "description": "password of the new User",
+                        "type": "string",
+                        "example": "This is new User's password"
+                    }
+                },
+                "type": "object"
+            },
+            "UpdateBookRequest": {
+                "title": "Store Book request",
+                "description": "Store Book request body data",
+                "required": [
+                    "name"
+                ],
+                "properties": {
+                    "title": {
+                        "title": "title",
+                        "description": "Title of the new Book",
+                        "type": "string",
+                        "example": "A nice Book"
+                    },
+                    "author": {
+                        "title": "author",
+                        "description": "Author of the new Book",
+                        "type": "string",
+                        "example": "This is new Book's author"
+                    }
+                },
+                "type": "object"
+            },
+            "UpdateUserRequest": {
+                "title": "Update User request",
+                "description": "Update User request body data",
+                "required": [
+                    "name"
+                ],
+                "properties": {
+                    "name": {
+                        "title": "name",
+                        "description": "name of the new User",
+                        "type": "string",
+                        "example": "John doe"
+                    },
+                    "email": {
+                        "title": "email",
+                        "description": "email of the new User",
+                        "type": "string",
+                        "example": "This is new User's email"
+                    },
+                    "password": {
+                        "title": "password",
+                        "description": "password of the new User",
+                        "type": "string",
+                        "example": "This is new User's password"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "parameters": {
+            "get_books_request_parameter_limit": {
+                "name": "limit",
+                "in": "query",
+                "description": "Limit the number of results",
+                "schema": {
+                    "type": "number",
+                    "default": 100
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearer": {
+                "type": "http",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Libary management",
+            "description": "API Endpoints of Library management"
+        }
+    ],
+    "security": [
+        []
+    ]
+}
