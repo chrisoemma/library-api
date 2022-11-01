@@ -1,7 +1,8 @@
 # library-api
 Library management system api
 
-# How to run projet locally
+# How to run projcet locally
+
 1.Clone the project to your destination
 
 2.Run composer install to install all the dependencies needed by the application
